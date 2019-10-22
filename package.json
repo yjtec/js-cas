@@ -2,6 +2,7 @@
   "name": "umi-plugin-cas",
   "version": "0.0.1",
   "description": "yjtec cas",
+  "files":["lib","template"],
   "main": "lib/index.js",
   "module": "dist/index.esm.js",
   "authors": {
