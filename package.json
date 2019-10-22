@@ -1,0 +1,28 @@
+{
+  "name": "umi-plugin-cas",
+  "version": "0.0.1",
+  "description": "yjtec cas",
+  "main": "lib/index.js",
+  "module": "dist/index.esm.js",
+  "authors": {
+    "name": "kidkang",
+    "email": "723616880@qq.com"
+  },
+  "repository": "https://github.com/yjtec/js-cas/@yjtec/cas",
+  "scripts": {
+    "dev": "father doc dev",
+    "build": "father build"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "father": "^2.16.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "js-cookie": "^2.2.1",
+    "mustache": "^3.1.0",
+    "umi-request": "^1.2.8"
+  }
+}
