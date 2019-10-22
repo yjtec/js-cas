@@ -9,7 +9,7 @@
     "name": "kidkang",
     "email": "723616880@qq.com"
   },
-  "repository": "https://github.com/yjtec/js-cas/@yjtec/cas",
+  "repository": "https://github.com/yjtec/js-cas",
   "scripts": {
     "dev": "father doc dev",
     "build": "father build"
