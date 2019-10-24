@@ -1,6 +1,6 @@
 {
   "name": "umi-plugin-cas",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "yjtec cas",
   "files":["lib","template"],
   "main": "lib/index.js",

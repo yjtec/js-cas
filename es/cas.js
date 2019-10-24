@@ -77,7 +77,7 @@ function _checkLogin() {
             ticket = params.ticket || getTicket();
 
             if (!ticket) {
-              _context.next = 16;
+              _context.next = 17;
               break;
             }
 
@@ -86,9 +86,10 @@ function _checkLogin() {
 
           case 6:
             re = _context.sent;
+            console.log(re);
 
             if (!(re.errcode == 0 && re.data)) {
-              _context.next = 12;
+              _context.next = 13;
               break;
             }
 
@@ -98,18 +99,18 @@ function _checkLogin() {
               user: re.data
             }));
 
-          case 12:
+          case 13:
             removeTicket();
             return _context.abrupt("return", Promise.resolve(false));
 
-          case 14:
-            _context.next = 17;
+          case 15:
+            _context.next = 18;
             break;
 
-          case 16:
+          case 17:
             return _context.abrupt("return", Promise.resolve(false));
 
-          case 17:
+          case 18:
           case "end":
             return _context.stop();
         }

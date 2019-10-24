@@ -15,13 +15,11 @@ function _query() {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            return _context.abrupt("return", request.post(action, {
-              options: {
-                method: 'post',
-                requestType: 'form',
-                data: {
-                  ticket: ticket
-                }
+            return _context.abrupt("return", request(action, {
+              method: 'post',
+              requestType: 'form',
+              data: {
+                ticket: ticket
               }
             }));
 
