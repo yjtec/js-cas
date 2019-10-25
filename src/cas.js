@@ -49,7 +49,6 @@ export async function checkLogin(){
   const ticket = params.ticket || getTicket();
   if(ticket){
     const re = await query(action,ticket);
-    console.log(re);
     if(re.errcode == 0 && re.data){
       setTicket(ticket);
       return Promise.resolve({
@@ -67,6 +66,7 @@ export async function checkLogin(){
 }
 export {
   Authorized,
-  CasContext
+  CasContext,
+  getTicket
 }
 export default Cas;

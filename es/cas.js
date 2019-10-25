@@ -77,7 +77,7 @@ function _checkLogin() {
             ticket = params.ticket || getTicket();
 
             if (!ticket) {
-              _context.next = 17;
+              _context.next = 16;
               break;
             }
 
@@ -86,10 +86,9 @@ function _checkLogin() {
 
           case 6:
             re = _context.sent;
-            console.log(re);
 
             if (!(re.errcode == 0 && re.data)) {
-              _context.next = 13;
+              _context.next = 12;
               break;
             }
 
@@ -99,18 +98,18 @@ function _checkLogin() {
               user: re.data
             }));
 
-          case 13:
+          case 12:
             removeTicket();
             return _context.abrupt("return", Promise.resolve(false));
 
-          case 15:
-            _context.next = 18;
+          case 14:
+            _context.next = 17;
             break;
 
-          case 17:
+          case 16:
             return _context.abrupt("return", Promise.resolve(false));
 
-          case 18:
+          case 17:
           case "end":
             return _context.stop();
         }
@@ -120,5 +119,5 @@ function _checkLogin() {
   return _checkLogin.apply(this, arguments);
 }
 
-export { Authorized, CasContext };
+export { Authorized, CasContext, getTicket };
 export default Cas;
