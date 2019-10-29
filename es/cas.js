@@ -12,8 +12,9 @@ import Authorized from './Authorized';
 import Cas from './Casitl';
 import { getPageQuery, urlExcept } from './utils/utils';
 import query from './service';
-import { getTicket, setTicket, removeTicket } from './utils/cookie';
+import Cookies from 'js-cookie';
 import CasContext from './CasContext';
+var cookieKey = 'yjtec-cas-ticket-';
 var defaultConfig = {};
 
 var getRedirect = function getRedirect() {
@@ -22,6 +23,9 @@ var getRedirect = function getRedirect() {
   return encodeURI(redirect);
 };
 
+export function getConfig() {
+  return defaultConfig;
+}
 export function setconfig(data) {
   var env = data.env,
       type = data.type;
@@ -39,6 +43,7 @@ export function setconfig(data) {
     uri = "http://dev.cas.360vrsh.com";
   }
 
+  cookieKey += type;
   defaultConfig = _objectSpread({}, data, {
     loginUri: uri + '/login/' + type,
     logoutUri: uri + '/logout/' + type
@@ -48,16 +53,21 @@ export function login() {
   var ticket = getTicket();
 
   if (ticket) {
-    removeTicket();
+    Cookies.remove(cookieKey);
   }
 
   var uri = defaultConfig.loginUri + '?redirect=' + getRedirect();
   window.location.href = uri;
 }
 export function logout() {
-  removeTicket();
+  Cookies.remove(cookieKey);
   window.location.href = defaultConfig.logoutUri + '?redirect=' + getRedirect();
 }
+
+var getTicket = function getTicket() {
+  return Cookies.get(cookieKey);
+};
+
 export function checkLogin() {
   return _checkLogin.apply(this, arguments);
 }
@@ -74,7 +84,7 @@ function _checkLogin() {
           case 0:
             _defaultConfig = defaultConfig, action = _defaultConfig.action, type = _defaultConfig.type;
             params = getPageQuery();
-            ticket = params.ticket || getTicket();
+            ticket = params.ticket || Cookies.get(cookieKey);
 
             if (!ticket) {
               _context.next = 16;
@@ -92,14 +102,14 @@ function _checkLogin() {
               break;
             }
 
-            setTicket(ticket);
+            Cookies.set(cookieKey, ticket);
             return _context.abrupt("return", Promise.resolve({
               ticket: ticket,
               user: re.data
             }));
 
           case 12:
-            removeTicket();
+            Cookies.remove(cookieKey);
             return _context.abrupt("return", Promise.resolve(false));
 
           case 14:

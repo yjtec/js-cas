@@ -3,7 +3,8 @@ const key = 'yjtec-cas-ticket';
 export function getTicket(){
   return Cookies.get(key);
 }
-export function setTicket(data){
+export function setTicket(data,endfix=''){
+  const cookiekey = 
   Cookies.set(key,data);
 }
 
