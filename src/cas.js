@@ -7,7 +7,13 @@ import CasContext from './CasContext';
 let cookieKey = 'yjtec-cas-ticket-';
 let defaultConfig = {};
 const getRedirect = () => {
-  let redirect = window.location.href;
+  const pageParams = getPageQuery();
+  let redirect = '';
+  if(pageParams.redirect){
+    redirect = pageParams.redirect;
+  }else{
+    redirect = window.location.href;
+  }
   redirect = urlExcept('ticket',redirect);
   return encodeURI(redirect);
 }

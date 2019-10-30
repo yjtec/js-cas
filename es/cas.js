@@ -18,7 +18,15 @@ var cookieKey = 'yjtec-cas-ticket-';
 var defaultConfig = {};
 
 var getRedirect = function getRedirect() {
-  var redirect = window.location.href;
+  var pageParams = getPageQuery();
+  var redirect = '';
+
+  if (pageParams.redirect) {
+    redirect = pageParams.redirect;
+  } else {
+    redirect = window.location.href;
+  }
+
   redirect = urlExcept('ticket', redirect);
   return encodeURI(redirect);
 };
