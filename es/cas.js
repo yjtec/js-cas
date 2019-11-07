@@ -28,7 +28,7 @@ var getRedirect = function getRedirect() {
   }
 
   redirect = urlExcept('ticket', redirect);
-  return encodeURI(redirect);
+  return encodeURIComponent(redirect);
 };
 
 export function getConfig() {
@@ -76,6 +76,14 @@ var getTicket = function getTicket() {
   return Cookies.get(cookieKey);
 };
 
+var filterTicket = function filterTicket(ticket) {
+  if (ticket.indexOf('#') !== -1) {
+    return ticket.substr(0, ticket.indexOf('#'));
+  }
+
+  return ticket;
+};
+
 export function checkLogin() {
   return _checkLogin.apply(this, arguments);
 }
@@ -92,21 +100,27 @@ function _checkLogin() {
           case 0:
             _defaultConfig = defaultConfig, action = _defaultConfig.action, type = _defaultConfig.type;
             params = getPageQuery();
-            ticket = params.ticket || Cookies.get(cookieKey);
+            ticket = '';
+
+            if (params.ticket) {
+              ticket = filterTicket(params.ticket);
+            } else {
+              ticket = Cookies.get(cookieKey);
+            }
 
             if (!ticket) {
-              _context.next = 16;
+              _context.next = 17;
               break;
             }
 
-            _context.next = 6;
+            _context.next = 7;
             return query(action, ticket);
 
-          case 6:
+          case 7:
             re = _context.sent;
 
             if (!(re.errcode == 0 && re.data)) {
-              _context.next = 12;
+              _context.next = 13;
               break;
             }
 
@@ -116,18 +130,18 @@ function _checkLogin() {
               user: re.data
             }));
 
-          case 12:
+          case 13:
             Cookies.remove(cookieKey);
             return _context.abrupt("return", Promise.resolve(false));
 
-          case 14:
-            _context.next = 17;
+          case 15:
+            _context.next = 18;
             break;
 
-          case 16:
+          case 17:
             return _context.abrupt("return", Promise.resolve(false));
 
-          case 17:
+          case 18:
           case "end":
             return _context.stop();
         }

@@ -4,6 +4,7 @@ import {getPageQuery,urlExcept} from './utils/utils';
 import query from './service';
 import Cookies from 'js-cookie';
 import CasContext from './CasContext';
+
 let cookieKey = 'yjtec-cas-ticket-';
 let defaultConfig = {};
 const getRedirect = () => {
@@ -15,7 +16,7 @@ const getRedirect = () => {
     redirect = window.location.href;
   }
   redirect = urlExcept('ticket',redirect);
-  return encodeURI(redirect);
+  return encodeURIComponent(redirect);
 }
 export function getConfig(){
   return defaultConfig;
@@ -56,10 +57,21 @@ export function logout(){
 const getTicket = function(){
   return Cookies.get(cookieKey);
 }
+const filterTicket = ticket =>{
+  if(ticket.indexOf('#') !== -1){
+    return ticket.substr(0,ticket.indexOf('#'));
+  }
+  return ticket;
+}
 export async function checkLogin(){
   const {action,type} = defaultConfig;
   const params = getPageQuery();
-  const ticket = params.ticket || Cookies.get(cookieKey);
+  let ticket = '';
+  if(params.ticket){
+    ticket = filterTicket(params.ticket);
+  }else{
+    ticket = Cookies.get(cookieKey);
+  }
   if(ticket){
     const re = await query(action,ticket);
     if(re.errcode == 0 && re.data){
