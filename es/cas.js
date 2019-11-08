@@ -67,6 +67,15 @@ export function login() {
   var uri = defaultConfig.loginUri + '?redirect=' + getRedirect();
   window.location.href = uri;
 }
+export function soc(type, callback) {
+  var uri = defaultConfig.loginUri + '/' + type;
+
+  if (callback) {
+    uri += "?callback=" + callback;
+  }
+
+  window.location.href = uri;
+}
 export function logout() {
   Cookies.remove(cookieKey);
   window.location.href = defaultConfig.logoutUri + '?redirect=' + getRedirect();
